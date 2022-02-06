@@ -26,6 +26,8 @@ high_score = 0
 pass_pipe = False
 font = pygame.font.SysFont("Bauhaus 93",60)
 
+game_over_surface = pygame.transform.scale2x(pygame.image.load('assets/message.png').convert_alpha())
+game_over_rect = game_over_surface.get_rect(center = (432, 385))
 
 #Load images
 background = pygame.image.load("assets/bg.png").convert_alpha()
