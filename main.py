@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 from pygame.examples.aliens import Score
 
@@ -41,12 +43,14 @@ def score_display(game_state):
   if game_state == True:
 
         score_surface = game_font.render(f'Score: {int(game.score)}', True, (255, 255, 255))
-        score_rect = score_surface.get_rect(center=(432, 100))
+        score_rect = score_surface.get_rect(center=(432, 70))
         game.screen.blit(score_surface, score_rect)
 
         high_score_surface = game_font.render(f'High Score: {int(game.high_score)}', True, (255, 255, 255))
-        high_score_rect = score_surface.get_rect(center=(432, 650))
+        high_score_rect = score_surface.get_rect(center=(390, 700))
         game.screen.blit(high_score_surface, high_score_rect)
+        game.screen.blit(game.game_over_surface, game.game_over_rect)
+
 
 
 def update_score():
@@ -126,14 +130,13 @@ while run:
         game.game_over = True
         game.high_score = update_score()
         score_display(True)
-        # Score display
 
+        # Score display
         if not bird.hitSomething :
             pygame.mixer.Sound.play(game.hit_sound)
             bird.hitSomething = True
 
     else:
-
         score_display(False)
 
 
@@ -151,9 +154,14 @@ while run:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT :
-            run = False
+            pygame.quit()
+            sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN and bird.flying==False and game.game_over == False:
             bird.flying = True
+
+        if event.type == pygame.MOUSEBUTTONDOWN and bird.flying==False and game.game_over == True:
+            game.game_over == False
+
 
     pygame.display.update()
 
